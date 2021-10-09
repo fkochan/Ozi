@@ -1,7 +1,11 @@
 import { Card, Button }  from 'react-bootstrap';
-import Web3 from 'web3'
+import { useState } from 'react';
+import Web3 from 'web3';
 
 function OButton() {
+
+    const [account, setAccount] = useState()
+
 
     async function load() {
       if (window.ethereum) {
@@ -9,7 +13,16 @@ function OButton() {
         try {
           // ask user permission to access his accounts
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            const account = accounts[0];
+            console.log(web3)
+            const chainId = await web3.eth.getChainId()
+            if (chainId != 137) {
+                alert("Please first change your MetaMask network to the MATIC RPC")
+            }
+            else {
+                const account = accounts[0];
+                let displayAccount = "Account: " + account.substring(0, 4) + "..." + account.slice(-5);
+                setAccount(displayAccount)
+            }
         } catch (error) {
           console.log(error)
         }
@@ -20,7 +33,7 @@ function OButton() {
 
   return (
     <div>
-        <Button onClick={load} variant="primary">Connect Wallet</Button>
+        <Button variant="primary" onClick={load}><span id="wallet">{account ? account : "Connect Wallet"}</span></Button>
     </div>
   );
 }
