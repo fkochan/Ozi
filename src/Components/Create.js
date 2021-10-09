@@ -34,29 +34,34 @@ function OCreate() {
     }
 
     async function sendMessage() {
-        checkAddress(address)
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-        const account = accounts[0]
-        const val = Web3.utils.toHex(Web3.utils.toWei('1', 'ether'))
-        console.log(val)
-        const transactionParameters = {
-            nonce: '0x00', // ignored by MetaMask
-            gasPrice: '0x30', // customizable by user during MetaMask confirmation.
-            gas: '0x21000', 
-            to: address, // Required except during contract publications.
-            value: val,
-            from: account, // must match user's active address.
-            data: payload, // Optional, but used for defining smart contract creation and interaction.
-            chainId: '0x137', // Used to prevent transaction reuse across blockchains. Auto-filled by MetaMask.
-        };
+        if (typeof window.ethereum !== 'undefined') {
+            checkAddress(address)
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+            const account = accounts[0]
+            const val = Web3.utils.toHex(Web3.utils.toWei('1', 'ether'))
+            console.log(val)
+            const transactionParameters = {
+                nonce: '0x00', // ignored by MetaMask
+                gasPrice: '0x30', // customizable by user during MetaMask confirmation.
+                gas: '0x21000', 
+                to: address, // Required except during contract publications.
+                value: val,
+                from: account, // must match user's active address.
+                data: payload, // Optional, but used for defining smart contract creation and interaction.
+                chainId: '0x137', // Used to prevent transaction reuse across blockchains. Auto-filled by MetaMask.
+            };
 
-        console.log(transactionParameters)
-        const txHash = await window.ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [transactionParameters]
-        })
-        setTxnHash(txHash)
-        console.log(txn)
+            console.log(transactionParameters)
+            const txHash = await window.ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [transactionParameters]
+            })
+            setTxnHash(txHash)
+            console.log(txn)
+        }
+        else {
+            alert("Install MetaMask First!")
+        }
     }
 
   return (
