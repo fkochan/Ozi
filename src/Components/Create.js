@@ -1,6 +1,5 @@
-import { Card, Button, Form, Container }  from 'react-bootstrap';
+import { Card, Button, Form }  from 'react-bootstrap';
 import { useState } from 'react';
-import OCanvas from './Canvas';
 import '../App.css';
 import Web3 from 'web3';
 
@@ -9,11 +8,12 @@ function OCreate() {
     const [address, setAddress] = useState('');
     const [message, setMessage] = useState('');
     const [payload, setPayload] = useState('');
+    const [txn, setTxnHash] = useState('');
 
     async function checkAddress(addy) {
         console.log(addy)
         const isValid = await Web3.utils.isAddress(addy)
-        if (isValid == true) {
+        if (isValid === true) {
             checkMessage(message)
         }
         else {
@@ -22,8 +22,8 @@ function OCreate() {
     }
 
     async function checkMessage(msg) {
-        if (msg != '') {
-            const payload = setPayload(await Web3.utils.toHex(msg))
+        if (msg !== '') {
+            setPayload(await Web3.utils.toHex(msg))
         }
         else {
             alert("Enter a valid message")        
@@ -34,10 +34,6 @@ function OCreate() {
         checkAddress(address)
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
         const account = accounts[0]
-        let web3 = new Web3(Web3.givenProvider)
-        const getGas = await web3.eth.getGasPrice()
-        console.log(getGas)
-        console.log(payload)
         const transactionParameters = {
             nonce: '0x00', // ignored by MetaMask
             gasPrice: '0x09184e72a000', // customizable by user during MetaMask confirmation.
@@ -54,6 +50,8 @@ function OCreate() {
         method: 'eth_sendTransaction',
         params: [transactionParameters],
         });
+        setTxnHash(txHash)
+        console.log(txn)
     }
 
   return (

@@ -1,6 +1,6 @@
-import { Card, Button }  from 'react-bootstrap';
+import { Button }  from 'react-bootstrap';
 import { useState } from 'react';
-import Web3 from 'web3';
+import Web3 from 'web3'
 
 function OButton() {
 
@@ -15,7 +15,7 @@ function OButton() {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             console.log(web3)
             const chainId = await web3.eth.getChainId()
-            if (chainId != 137) {
+            if (chainId !== 137) {
                 alert("Please first change your MetaMask network to the MATIC RPC")
             }
             else {
