@@ -23,7 +23,10 @@ function OCreate() {
 
     async function checkMessage(msg) {
         if (msg !== '') {
-            setPayload(await Web3.utils.toHex(msg))
+            console.log(msg)
+            const hexData = await Web3.utils.toHex(msg)
+            console.log(hexData)
+            setPayload(hexData)
         }
         else {
             alert("Enter a valid message")        
@@ -34,13 +37,15 @@ function OCreate() {
         checkAddress(address)
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
         const account = accounts[0]
+        const val = Web3.utils.toHex(Web3.utils.toWei('1', 'ether'))
+        console.log(val)
         const transactionParameters = {
             nonce: '0x00', // ignored by MetaMask
-            gasPrice: '0x09184e72a000', // customizable by user during MetaMask confirmation.
-            gas: '0x21000', // customizable by user during MetaMask confirmation.
+            gasPrice: '0x30', // customizable by user during MetaMask confirmation.
+            gas: '0x21000', 
             to: address, // Required except during contract publications.
+            value: val,
             from: account, // must match user's active address.
-            value: '0x00', // Only required to send ether to the recipient from the initiating external account.
             data: payload, // Optional, but used for defining smart contract creation and interaction.
             chainId: '0x137', // Used to prevent transaction reuse across blockchains. Auto-filled by MetaMask.
         };
@@ -48,8 +53,8 @@ function OCreate() {
         console.log(transactionParameters)
         const txHash = await window.ethereum.request({
         method: 'eth_sendTransaction',
-        params: [transactionParameters],
-        });
+        params: [transactionParameters]
+        })
         setTxnHash(txHash)
         console.log(txn)
     }
