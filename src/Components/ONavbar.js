@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 import OHome from './Home';
 import OCreate from './Create';
-import OButton from './Button';
 import logo from '../images/share.png'
 
 
@@ -26,13 +25,12 @@ function ONavbar() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-          <Link to="/">Home</Link>
-          </Nav>
+          <Link style={{marginRight:"10px"}}to="/">Home</Link>
           <Link to="/create">Create</Link>
+          </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-          <OButton /> 
           </Navbar.Text>
           </Navbar.Collapse>
           </Container>
