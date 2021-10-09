@@ -10,7 +10,7 @@ function OHome() {
     <Card.Text>
     All you need is their public key...
     </Card.Text>
-    <h6 style={{textDecoration:"underline"}} href="#learn more">Learn more...</h6>
+    <h6 style={{textDecoration:"underline"}}><a href="https://github.com/fkochan/Ozi/blob/main/README.md">Learn more...</a></h6>
     <Button href="/create" variant="primary">Send a message</Button>
     </Card.Body>
     </Card>
