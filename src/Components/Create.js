@@ -86,7 +86,10 @@ function OCreate() {
             <Form.Control as="textarea" rows={3}  placeholder="gm..." value={message} onChange={(e) => setMessage(e.target.value)}/>
             </Form.Group>
         </Form>
-        <Button variant="primary" onClick={() => sendMessage(address)}>Send Message</Button>
+        <Button variant="primary" style={{marginBottom:"3px"}}onClick={() => sendMessage(address)}>Send Message</Button>
+        <Card.Text>
+          1 MATIC to send a message (also to prevent spamming), funds to go recipient
+        </Card.Text>
       </Card.Body>
       <Card.Footer className="text-muted">Built with ❤️ on polygon</Card.Footer>
     </Card>
